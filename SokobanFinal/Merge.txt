@@ -1,0 +1,24 @@
+Most of our changes were new ideas instead of simple merges since we started from scratch! 
+(So there is more explanation in changes.txt)
+
+1. Our implementations were pretty different and we decided to start from scratch by using arraylists.
+	We discarded the use of ILists since traversing through arraylists was much simpler and easier
+	if we wanted to find a position, for example. Also most of our utils use array lists which, again, 
+	was much easier to use.
+
+2. We also decided to switch to using posns, which we did not before, because that would be able to keep 
+	track of positioning as well. We got this idea from the examples we saw from the sokoban part 1 
+	review assignment. This was much easier than counting columns and rows and attempting
+	to keep track of it.
+
+3. Something that we both kept was keeping the ICell and AICell structure since it allowed us 
+	to easily implement a new tile, like the hole.
+
+4. We also decided to use function-objects to help with movement since it would be able to 
+	visit all the types of cells easily.
+	
+5. We kept SokobanGame and SokobanWorld to distinguish the game logic from the user input because 
+	it made the code a lot more readable and understandable.
+
+
+

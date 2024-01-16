@@ -1,0 +1,45 @@
+Changes:
+
+1. Changes to Data Definitions from Previous Assignment:
+
+The major change in the data definition was that the SokobanBoard has two ArrayLists of ICell
+(ground and content). We decided to switch from generic IList to ArrayLists because it 
+simplified the code and made iterating over a list easier. The built in ArrayList functions
+are also useful, such as getting something at an index or adding an item. With the switch to
+ArrayList, we also added a size field to the SokobanBoard to help e render the board correctly.
+Another major change was switching to using Posn instead of creating a "grid" using a list of 
+lists. By using Posn, the order of the lists are not important and we are able to easily
+place cells onto the board when rendering (leveraging the use of placeImageXY
+ them or moving cells around. While moving a player
+around using a list of lists is do-able, when having to move around a player and another cell,
+it is harder to know exactly what is going on in the list of lists. Posn seemed more straight-
+forward and easier to implement and expand upon in the future. Adding the hole functionality also
+changed the data definition since there is a new type of cell. The hole functionality added 
+another element to the game and more of a challenge to think about what it means to have
+won the game. A small change that was also made to ICell in addition to Posn was the isGround
+field. This boolean represented whether the cell is a ground cell. Although simple, isGround
+helped simplify the process of converting the string given to the board constructor into a
+list of cells. Instead of having separate method for ground and content cells, the same method
+can be used, and the convenience constructor sets the cell to the correct isGround when it is
+constructed.  
+
+2. Designing Part 1 Differently Knowing About Holes:
+
+We designed a lot of our data differently but we kept a similar design for our Cells as ICell and AICells were 
+similarly present in some previous designs. It was a good idea to keep the interface for all cells since 
+they have very similar promises for methods but also having the abstract class helped to keep the code clean and efficient.
+This is because they all have the same fields for the most part and the same method bodies.
+Adding a hole was quite easy, the only "difficulty" was adding on holes into the function-objects, like for movement, but even
+then it was quite simple in comparison to previously not using visitors.
+
+3. Current Design Accommodating to Changes:
+
+After deciding on what changes to make, we initially started by remaking
+part 1 with those changes, and then started to implement the additions from part 2 such as 
+holes. Adding holes to the game was not as challenging as expected, as many of the functions
+written for other parts of the game were applicable. This could be attributed to our use of
+Posn and visitors in the revised version. There is also less bulk and code in general in this
+revised version, so implementing new tiles would not add as much clutter and confusion to the
+program. The separation of the ground and contents also makes it easy to add a tile to either
+the ground or contents and have that tile interact with the other tile at the same location
+on a different level. 

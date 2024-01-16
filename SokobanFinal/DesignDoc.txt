@@ -1,0 +1,129 @@
+// important note: depending on your device, the images may not show up if you have "src/" in front of the images files in SokobanGame.java
+// if this happens to you, remove "src/" and the images/game should load properly
+// if this does not happen to you, ignore this message
+----------------------------------------------------------------------------------------------
+SOKOBANGAME:
+
+The SokobanBoard class represents the state of the Sokoban game's board. It stores the size of the board, the ground cells of the board, and the content cells of the board. The class provides methods to render the board, move the player, determine if the board has been won, and check if the level should end.
+
+Class Attributes:
+- Posn size: A Posn object that represents the width and height of the board.
+- ArrayList<ICell> levelGroundCells: A list of ICell objects that represents the ground cells of the board.
+- ArrayList<ICell> levelContentsCells: A list of ICell objects that represents the content cells of the board.
+
+Class Methods:
+- SokobanBoard(Posn size, ArrayList<ICell> levelGroundCells, ArrayList<ICell> levelContentsCells): 
+		-> A constructor that creates a board with the given size, ground cells, and content cells.
+- SokobanBoard(String levelGround, String levelContents): 
+		-> A constructor that creates a board based on two strings. It creates the board with the ground cells specified by the levelGround string and the content cells specified by the levelContents string.
+- WorldScene render(): 
+		-> A method that renders the board into an image. It returns a WorldScene object that contains the images of all the cells in the board.
+- SokobanBoard playerMove(String direction): 
+		-> A method that produces a new board with the player moved in the given direction, if the player is able to move there. It returns a new SokobanBoard object with the updated state.
+- boolean levelWon(): 
+		-> A method that determines if the board has been won, i.e., every target has a trophy on top with the correct color. It returns true if the board has been won, false otherwise.
+- boolean shouldEnd(): 
+		-> A method that checks if the level should end, under the conditions that the level is won or that no player is found. It returns true if the level should end, false otherwise.
+
+-----------------------------------------------
+
+ICell & AICell:
+
+Attributes:
+- coord: a Posn representing the location of the cell
+- isGround: a boolean indicating whether the cell is a ground cell
+
+Methods:
+- drawICell(): produces an image of this cell (implemented by subclasses)
+- accept(visitor: ICellVisitor<T>): to return the result of applying the given visitor to this Cell (implemented by subclasses)
+- findPlayer(): helps determine the location of the player in the board
+- move(direction: String): produces a new cell moved to the new coordinates based on the given direction and this cell
+- goodPair(color: Color): determines if this cell is a good pair with the given color
+- getPosn(): used for testing purposes only to find the position of a cell
+
+Sub-Classes:
+- Blank Cell: A subclass of AICell representing a cell on the ground/content
+- Trophy Cell: A subclass of AICell representing a trophy cell on the content
+- Target Cell: A subclass of AICell representing a player cell on the ground.
+- Wall Cell: A subclass of AICell representing a wall on the content
+- Box Cell: A subclass of AICell representing a trophy cell on the content
+- Player Cell: A subclass of AICell representing a player cell on the content.
+- Hole Cell: A subclass of AICell representing a cell on the content
+
+-----------------------------------------------
+
+Function-Objects:
+
+- CellPosnVisitor : 
+	CellPosn is a function object that implements the ICellVisitor interface. 
+	It represents a visitor that visits an ICell and evaluates the cell to a Posn representing the location of the visited cell.
+	It has methods that implement the ICellVisitor interface for each type of ICell object in the game: Blank, Wall, Box, Player, Target, Trophy, and Hole. 
+	Each of these methods returns a Posn representing the location of the visited cell.
+
+- MovePlayerVisitor :
+	MovePlayer is another function object that implements the ICellVisitor interface. 
+	It represents a visitor that visits an ICell and evaluates the cell to an ICell representing a new player based on the given player either moved to a new location based on the given direction or in the same place. 
+	It has methods that implement the ICellVisitor interface for each type of ICell object in the game: Blank, Wall, Box, Player, Target, Trophy, and Hole. 
+	Each of these methods returns an ICell representing a new player moved to a new location or in the same place based on the given direction, 
+	taking into account the position of other objects on the board. The MovePlayer function object has fields representing the current player, the direction in which the player should move, the level contents of the board, and the size of the board.
+
+- CanMoveToVisitor : 
+	CanMoveToVisitor is a function object that implements the ICellVisitor interface. 
+	It represents a visitor that visits an ICell and evaluates whether the given object can move to the visited cell. 
+	It has methods that implement the ICellVisitor interface for each type of ICell object in the game: Blank, Wall, Box, Player, Target, Trophy, and Hole. 
+	Each of these methods returns a boolean value indicating whether the given object can move to the visited cell or not, based on the position of other objects on the board.
+
+- MoveBoxVisitor :
+	This is a visitor that can be used in a game where the player needs to move boxes around a grid. 
+	The MoveBoxVisitor can be passed to each box on the grid, and the box will call the visitor's visit() method to determine if the box can be moved in a certain direction. 
+	If the box can be moved, the visitor will return a boolean value of true, and the box will move in the requested direction. 
+	If the box cannot be moved, the visitor will return false, and the box will remain in its current position.
+
+- MoveTrophyVisitor :
+	This is a visitor that can be used in a game where the player needs to move a trophy around a grid. 
+	The MoveTrophyVisitor can be passed to the trophy on the grid, and the trophy will call the visitor's visit() method to determine if it can be moved in a certain direction. 
+	If the trophy can be moved, the visitor will return a boolean value of true, and the trophy will move in the requested direction. 
+	If the trophy cannot be moved, the visitor will return false, and the trophy will remain in its current position.
+
+- GoodPairVisitor : 
+	GoodPair is a class that helps determine if a trophy and a target are a good pair to determine if a level is won.  
+	Returns a boolean value indicating whether they are a good pair or not. 
+	A trophy and a target are considered a good pair if they are at the same location on the board and have the same color. 
+	This class is used by the game engine to check if the level is completed by the player
+
+
+-----------------------------------------------
+
+UTILS: extra helper methods used in Sokoban
+
+- ArrayList<String> explode(String s): 
+	Splits the given string s into substrings based on a delimiter and returns an ArrayList of these substrings.
+
+- ArrayList<ICell> toLevelCells(String given, boolean isGround): 
+	Converts the given string given to an ArrayList of ICell objects representing the level. 
+	The isGround parameter is used to determine if the level should be created with GroundCell or HoleCell objects.
+ 
+- Posn findSize(String given): 
+	Parses the given string given and returns a Posn representing the size of the level.
+
+- ICell makeCell(String given, int column, int row, boolean isGround): 
+	Creates an ICell object based on the given string given, column, and row. 
+	The isGround parameter is used to determine if the ICell should be created as a Ground Cell or Content Cell.
+
+- boolean samePosn(Posn p1, Posn p2): 
+	Determines if two Posn objects are equal based on their x and y coordinates.
+
+- int findPlayerIndex(ArrayList<ICell> list): 
+	Searches the given ArrayList of ICell objects for a PlayerCell object and returns its index in the list.
+
+- ICell findCell(ArrayList<ICell> list, int x, int y): 
+	Searches the given ArrayList of ICell objects for an ICell object at the specified x and y coordinates.
+
+- ICell findNext(ArrayList<ICell> list, String direction, Posn start, Posn size): 
+	Returns the ICell object that is next in the specified direction from the ICell at the start Posn in the given ArrayList of ICell objects. 
+	The size parameter is used to determine the boundaries of the level.
+	
+- ArrayList<ICell> noDupes(ArrayList<ICell> list, ICell cell) : 
+	Produces a list of ICell where the given cell is only added to the list if no cells
+    In the list have the same coordinates
+	

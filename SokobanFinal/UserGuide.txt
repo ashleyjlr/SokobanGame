@@ -1,0 +1,38 @@
+SOKOBAN HOW TO PLAY
+
+OBJECTIVE OF THE GAME: as the player, clear levels by pushing each trophy on top of the same colored target, 
+you will win once you place each corresponding trophy to the corresponding target!
+
+-----------------------------------------------
+
+Item Mechanics
+- walls : the player cannot pass through them, and they do not move
+- boxes : the player cannot pass through them, but they can be moved by the player if the box is not adjacent to another object
+- targets (floor) : the player and other movable items can pass through them, they are fixed on the ground 
+    - red, yellow, blue, green
+- trophies : the player cannot pass through them, but they can be moved by the player if the trophy is not adjacent to another object
+    - red, yellow, blue, green
+- holes : the player cannot pass though them, and they do not move. if the player or an item moves onto one, the player will disappear and the game will end
+or the item will disappear and the hole will turn into a blank space, so it will be safe for the player to move
+
+-----------------------------------------------
+
+Controls
+- w (or up arrow key): player moves up
+- a, (or left arrow key) : player moves left
+- s, (or down arrow key) : player moves down
+- d, (or right arrow key) : player moves right
+
+-----------------------------------------------
+
+Gameplay:
+- How to Win: End the game with a win by placing each trophy on the corresponding target
+- How to Lose: End the game with a lose by losing the player into a black hole
+- What to do:
+	-> player can move up, down, left, right
+	-> player can move movable objects (boxes and trophies) as the player moves in the corresponding direction
+	-> player cannot move movable objects if said objects are adjacent to other objects, move-able or immovable
+	-> player can push objects into black holes to fill them and be able to walk over to them 
+	-> player can fall into holes to end games
+	-> player cannot move past walls or onto walls
+	
